@@ -26,7 +26,9 @@ from google.cloud import texttospeech
 import pygame 
 
 RUN_DIR = '/run/user/%d' % os.getuid()
-
+# Instantiates a client
+client = texttospeech.TextToSpeechClient()
+    
 def say(text, lang='en-US', volume=60, pitch=130, speed=100, device='default'):
     """
     Speaks the provided text.
@@ -68,8 +70,6 @@ def google_tts_say(text, lang='en-US',gender='NEUTRAL'):
         g = texttospeech.SsmlVoiceGender.MALE
     elif gender == 'FEMALE':
         g = texttospeech.SsmlVoiceGender.FEMALE
-    # Instantiates a client
-    client = texttospeech.TextToSpeechClient()
 
     # Set the text input to be synthesized
     synthesis_input = texttospeech.SynthesisInput(text=text)
@@ -100,7 +100,6 @@ def google_tts_say(text, lang='en-US',gender='NEUTRAL'):
     pygame.init()
     pygame.mixer.music.load('output.mp3')
     pygame.mixer.music.play()
-    print('played')
 
 
 def _main():
