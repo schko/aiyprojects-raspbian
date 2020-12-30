@@ -52,24 +52,22 @@ def say(text, lang='en-US', volume=60, pitch=130, speed=100, device='default'):
              (f.name, lang, data, device, f.name)
        subprocess.check_call(cmd, shell=True)
 
-def google_tts_say(text, lang='en-US'):
+def google_tts_say(text, lang='en-US',gender='NEUTRAL'):
     """
     Speaks the provided text.
     Args:
         text: The text you want to speak.
         lang: The language to use. Supported languages are:
             en-US, en-GB, de-DE, es-ES, fr-FR, it-IT.
-        volume: Volume level for the converted audio. The normal volume level is
-            100. Valid volume levels are between 0 (no audible output) and 500 (increasing the
-            volume by a factor of 5). Values higher than 100 might result in degraded signal
-            quality due to saturation effects (clipping) and is not recommended. To instead adjust
-            the volume output of your device, enter ``alsamixer`` at the command line.
-        pitch: The pitch level for the voice. The normal pitch level is 100, the allowed values lie
-            between 50 (one octave lower) and 200 (one octave higher).
-        speed: The speed of the voice. The normal speed level is 100, the allowed values lie
-            between 20 (slowing down by a factor of 5) and 500 (speeding up by a factor of 5).
-        device: The PCM device name. Leave as ``default`` to use the default ALSA soundcard.
+        gender: gender
     """
+    
+    if gender == 'NEUTRAL':
+        g = texttospeech.SsmlVoiceGender.NEUTRAL
+    elif gender == 'MALE':
+        g = texttospeech.SsmlVoiceGender.MALE
+    elif gender == 'FEMALE':
+        g = texttospeech.SsmlVoiceGender.FEMALE
     # Instantiates a client
     client = texttospeech.TextToSpeechClient()
 
@@ -79,7 +77,7 @@ def google_tts_say(text, lang='en-US'):
     # Build the voice request, select the language code ("en-US") and the ssml
     # voice gender ("neutral")
     voice = texttospeech.VoiceSelectionParams(
-        language_code=lang, ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL
+        language_code=lang, ssml_gender=g
     )
 
     # Select the type of audio file you want returned
@@ -97,10 +95,12 @@ def google_tts_say(text, lang='en-US'):
     with open("output.mp3", "wb") as out:
         # Write the response to the output file.
         out.write(response.audio_content)
+        print('Audio content written to file "output.mp3"')
 
     pygame.init()
     pygame.mixer.music.load('output.mp3')
     pygame.mixer.music.play()
+    print('played')
 
 
 def _main():
