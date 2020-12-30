@@ -6,6 +6,12 @@ and is included in images starting with `aiyprojects-2017-12-18.img`.
 The previous `voicekit` branch contains code just for the Voice Kit, and the
 `master` branch contains the original deprecated `Voice Recognizer` demo.
 
+## Additional steps
+
+To set up AIY for Google Text to Speech applications, you need to:
+1. pip3 install google-cloud-texttospeech
+1. export GOOGLE_APPLICATION_CREDENTIALS="/cloud_speech.json"
+
 ## Documentation
 
 If you're just getting started with the Vision or Voice kit, see the
