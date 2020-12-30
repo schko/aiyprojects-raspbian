@@ -97,12 +97,10 @@ def google_tts_say(text, lang='en-US'):
     with open("output.mp3", "wb") as out:
         # Write the response to the output file.
         out.write(response.audio_content)
-        print('Audio content written to file "output.mp3"')
 
     pygame.init()
     pygame.mixer.music.load('output.mp3')
     pygame.mixer.music.play()
-    print('played')
 
 
 def _main():
