@@ -69,6 +69,15 @@ def main():
                 # Remove "repeat after me" from the text to be repeated
                 to_repeat = text.replace('repeat after me', '', 1)
                 tts.google_tts_say(to_repeat)
+            elif 'ask for justice' in text:
+                tts.google_tts_say('The court gave you justice.', gender='MALE')
+            elif 'an eye for an eye' in text:
+                tts.google_tts_say('But your daughter is still alive.', gender='MALE')
+            elif 'how much shall i pay you' in text or 'how much should i pay you' in text:
+                tts.google_tts_say("""You never think to protect yourself with real friends. 
+                You think it's enough to be an American. All right, the Police protects you, there are Courts of Law, so you don't need a friend like me.
+		        But now you come to me and say Don Corleone, you must give me justice. And you don't ask in respect or friendship.
+                And you don't think to call me Godfather; instead you come to my house on the day my daughter is to be married and you ask me to do murder for money.""", gender='MALE', type='ssml')
             elif 'goodbye' in text:
                 break
 
