@@ -24,11 +24,12 @@ import subprocess
 import tempfile
 from google.cloud import texttospeech
 import pygame 
+import html
 
 RUN_DIR = '/run/user/%d' % os.getuid()
 # Instantiates a client
 client = texttospeech.TextToSpeechClient()
-    
+
 def say(text, lang='en-US', volume=60, pitch=130, speed=100, device='default'):
     """
     Speaks the provided text.
@@ -54,7 +55,27 @@ def say(text, lang='en-US', volume=60, pitch=130, speed=100, device='default'):
              (f.name, lang, data, device, f.name)
        subprocess.check_call(cmd, shell=True)
 
-def google_tts_say(text, lang='en-US',gender='NEUTRAL'):
+def text_to_ssml(inputfile):
+
+    raw_lines = inputfile
+
+    # Replace special characters with HTML Ampersand Character Codes
+    # These Codes prevent the API from confusing text with
+    # SSML commands
+    # For example, '<' --> '&lt;' and '&' --> '&amp;'
+
+    escaped_lines = html.escape(raw_lines)
+
+    # Convert plaintext to SSML
+    # Wait two seconds between each address
+    ssml = "<speak>{}</speak>".format(
+        escaped_lines.replace("\n", '\n<break time="2s"/>')
+    )
+
+    # Return the concatenated string of ssml script
+    return ssml
+
+def google_tts_say(text, lang='en-US',gender='NEUTRAL',type='text'):
     """
     Speaks the provided text.
     Args:
@@ -63,16 +84,22 @@ def google_tts_say(text, lang='en-US',gender='NEUTRAL'):
             en-US, en-GB, de-DE, es-ES, fr-FR, it-IT.
         gender: gender
     """
-    
+    if type == 'ssml':
+        text = text_to_ssml(text)
+
     if gender == 'NEUTRAL':
         g = texttospeech.SsmlVoiceGender.NEUTRAL
     elif gender == 'MALE':
         g = texttospeech.SsmlVoiceGender.MALE
     elif gender == 'FEMALE':
         g = texttospeech.SsmlVoiceGender.FEMALE
+    
 
     # Set the text input to be synthesized
-    synthesis_input = texttospeech.SynthesisInput(text=text)
+    if type == 'ssml':
+        synthesis_input = texttospeech.SynthesisInput(ssml=text)
+    else:
+        synthesis_input = texttospeech.SynthesisInput(text=text)
 
     # Build the voice request, select the language code ("en-US") and the ssml
     # voice gender ("neutral")
@@ -100,6 +127,9 @@ def google_tts_say(text, lang='en-US',gender='NEUTRAL'):
     pygame.init()
     pygame.mixer.music.load('output.mp3')
     pygame.mixer.music.play()
+    print('playing')
+    while pygame.mixer.music.get_busy() == True:
+        continue
 
 
 def _main():
