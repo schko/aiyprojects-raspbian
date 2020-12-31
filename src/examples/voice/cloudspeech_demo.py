@@ -69,6 +69,7 @@ def main():
                 # Remove "repeat after me" from the text to be repeated
                 to_repeat = text.replace('repeat after me', '', 1)
                 tts.google_tts_say(to_repeat)
+	    # some Godfather quotes
             elif 'ask for justice' in text:
                 tts.google_tts_say('The court gave you justice.', gender='MALE')
             elif 'an eye for an eye' in text:
