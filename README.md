@@ -4,7 +4,7 @@ This repository contains an easy-to-use Python API for the [AIY Vision Kit][aiy-
 and [AIY Voice Kit][aiy-voice]. The code for all AIY kits is in the `aiyprojects` branch,
 and is included in images starting with `aiyprojects-2017-12-18.img`.
 
-This repo has been repurposed for BCI studies at LIINC.
+This repo has been repurposed for BCI studies at LIINC..
 
 ## Additional steps
 
