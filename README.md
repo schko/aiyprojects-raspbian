@@ -1,10 +1,10 @@
-# AIY Projects
+# AIY Voice for BCI
 
 This repository contains an easy-to-use Python API for the [AIY Vision Kit][aiy-vision]
 and [AIY Voice Kit][aiy-voice]. The code for all AIY kits is in the `aiyprojects` branch,
 and is included in images starting with `aiyprojects-2017-12-18.img`.
-The previous `voicekit` branch contains code just for the Voice Kit, and the
-`master` branch contains the original deprecated `Voice Recognizer` demo.
+
+This repo has been repurposed for BCI studies at LIINC.
 
 ## Additional steps
 
