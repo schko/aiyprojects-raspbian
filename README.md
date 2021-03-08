@@ -10,7 +10,8 @@ This repo has been repurposed for BCI studies at LIINC..
 
 To set up AIY for Google Text to Speech applications, you need to:
 1. pip3 install google-cloud-texttospeech
-1. export GOOGLE_APPLICATION_CREDENTIALS="/cloud_speech.json"
+2. add GOOGLE_APPLICATION_CREDENTIALS named "cloud_speech.json" into your home folder
+3. ```wget https://github.com/labstreaminglayer/liblsl/releases/download/1.12/liblsl-1.12.0-Linux-ARM7.deb; sudo apt-get install ./liblsl-1.12.0-Linux-ARM7.deb```
 
 ## Documentation
 
