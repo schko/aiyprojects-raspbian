@@ -22,6 +22,8 @@ from aiy.voice import tts
 from aiy.board import Board, Led
 from aiy.cloudspeech import CloudSpeechClient
 from pylsl import StreamInfo, StreamOutlet
+import os
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="/home/pi/cloud_speech.json"
 
 #  to interpret the content
 info = StreamInfo('AIYVoice', 'Markers', 1, 0, 'string', 'aiyvoice')
