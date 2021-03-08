@@ -21,7 +21,13 @@ import logging
 from aiy.voice import tts
 from aiy.board import Board, Led
 from aiy.cloudspeech import CloudSpeechClient
+from pylsl import StreamInfo, StreamOutlet
 
+#  to interpret the content
+info = StreamInfo('AIYVoice', 'Markers', 1, 0, 'string', 'aiyvoice')
+
+# next make an outlet
+outlet = StreamOutlet(info)
 
 def get_hints(language_code):
     if language_code.startswith('en_'):
@@ -69,6 +75,7 @@ def main():
                 # Remove "repeat after me" from the text to be repeated
                 to_repeat = text.replace('repeat after me', '', 1)
                 tts.google_tts_say(to_repeat)
+                outlet.push_sample([to_repeat])
 	    # some Godfather quotes
             elif 'ask for justice' in text:
                 tts.google_tts_say('The court gave you justice.', gender='MALE')

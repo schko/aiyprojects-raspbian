@@ -26,6 +26,7 @@ setup(
         'picamera',
         'Pillow',
         'RPi.GPIO',
+        'pylsl'
     ],
     python_requires='>=3.5.3',
 )
