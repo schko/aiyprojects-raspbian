@@ -26,6 +26,7 @@ from google.cloud import texttospeech
 import pygame 
 import html
 
+
 RUN_DIR = '/run/user/%d' % os.getuid()
 # Instantiates a client
 client = texttospeech.TextToSpeechClient()

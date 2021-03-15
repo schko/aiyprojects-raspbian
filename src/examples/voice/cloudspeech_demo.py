@@ -18,12 +18,14 @@ import argparse
 import locale
 import logging
 
+import os
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="/home/pi/cloud_speech.json"
+
 from aiy.voice import tts
 from aiy.board import Board, Led
 from aiy.cloudspeech import CloudSpeechClient
-from pylsl import StreamInfo, StreamOutlet
-import os
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="/home/pi/cloud_speech.json"
+from pylsl import StreamInfo, StreamOutlet, local_clock
+
 
 #  to interpret the content
 info = StreamInfo('AIYVoice', 'Markers', 1, 0, 'string', 'aiyvoice')
@@ -55,6 +57,7 @@ def main():
     client = CloudSpeechClient()
     with Board() as board:
         while True:
+
             if hints:
                 logging.info('Say something, e.g. %s.' % ', '.join(hints))
             else:
@@ -73,21 +76,13 @@ def main():
                 board.led.state = Led.OFF
             elif 'blink the light' in text:
                 board.led.state = Led.BLINK
-            elif 'repeat after me' in text:
-                # Remove "repeat after me" from the text to be repeated
-                to_repeat = text.replace('repeat after me', '', 1)
-                tts.google_tts_say(to_repeat)
-                outlet.push_sample([to_repeat])
-	    # some Godfather quotes
-            elif 'ask for justice' in text:
-                tts.google_tts_say('The court gave you justice.', gender='MALE')
-            elif 'an eye for an eye' in text:
-                tts.google_tts_say('But your daughter is still alive.', gender='MALE')
-            elif 'how much shall i pay you' in text or 'how much should i pay you' in text:
-                tts.google_tts_say("""You never think to protect yourself with real friends. 
-                You think it's enough to be an American. All right, the Police protects you, there are Courts of Law, so you don't need a friend like me.
-		        But now you come to me and say Don Corleone, you must give me justice. And you don't ask in respect or friendship.
-                And you don't think to call me Godfather; instead you come to my house on the day my daughter is to be married and you ask me to do murder for money.""", gender='MALE', type='ssml')
+            elif 'confident' in text or 'confidence' in text:
+                # Remove "confidence" from the text to be repeated
+                to_repeat = text.replace('confidence', '', 1)
+                to_repeat = text.replace('confident', '', 1)
+                tts.google_tts_say('You are ' + to_repeat + ' confident')
+                stamp = local_clock()-0.5
+                outlet.push_sample([text],stamp)
             elif 'goodbye' in text:
                 break
 

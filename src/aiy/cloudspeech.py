@@ -132,7 +132,7 @@ class CloudSpeechClient:
                                      chunk_duration_sec=0.1,
                                      on_start=self.start_listening,
                                      on_stop=self.stop_listening)
-
+            
             requests = (speech.types.StreamingRecognizeRequest(audio_content=data) for data in chunks)
             responses = self._client.streaming_recognize(config=streaming_config, requests=requests)
 
