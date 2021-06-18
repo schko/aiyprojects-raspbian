@@ -14,6 +14,10 @@ To set up AIY for Google Text to Speech applications, you need to:
 3. ```wget https://github.com/labstreaminglayer/liblsl/releases/download/1.12/liblsl-1.12.0-Linux-ARM7.deb; sudo apt-get install ./liblsl-1.12.0-Linux-ARM7.deb```
 4. Manually install the package if needed: ```python setup.py install```
 
+### Changes to any package files
+1. Make your changes to the src files
+2. Manually install the package: ```python setup.py install```
+
 ## Documentation
 
 If you're just getting started with the Vision or Voice kit, see the
