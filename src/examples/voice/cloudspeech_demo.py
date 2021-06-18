@@ -83,6 +83,9 @@ def main():
                 tts.google_tts_say('You are ' + to_repeat + ' confident')
                 stamp = local_clock()-0.5
                 outlet.push_sample([text],stamp)
+            elif 'hard' in text or 'easy' in text:
+                stamp = local_clock()-0.5
+                outlet.push_sample([text],stamp)
             elif 'goodbye' in text:
                 break
 
